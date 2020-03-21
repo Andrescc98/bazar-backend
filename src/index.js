@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const morgan = require("morgan");
 require('./database');
+const path=require('path');
+
 
 const app = express();
 
@@ -18,6 +20,9 @@ app.use(cors());
 app.use("/api/usuario", require("./routes/usuario"));
 app.use("/api/producto", require("./routes/producto"));
 app.use("/api/comentario", require("./routes/comentario"));
+
+// public
+app.use('/public/img', express.static(path.join(__dirname, '/public/upload')))
 
 // port
 app.listen(app.get("port"), () => {
