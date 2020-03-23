@@ -13,7 +13,7 @@ app.set("port", process.env.PORT || 3000);
 // middleware
 app.use(morgan("tiny"));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended:false }));
 app.use(cors());
 
 // routes
