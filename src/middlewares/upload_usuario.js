@@ -1,8 +1,6 @@
-const path = require("path");
 const multer = require("multer");
 const uuid = require("uuid");
-const pool = require("../database");
-const util=require('util');
+const path = require("path");
 
 const storage = multer.diskStorage({
   destination: path.join(__dirname, "../public/upload/usuario"),
@@ -10,7 +8,7 @@ const storage = multer.diskStorage({
     cb(null, uuid.v4() + path.extname(file.originalname));
   }
 });
-const upload =/* util.promisify( */ multer({
+const upload = multer({
   storage: storage,
   limits: { fileSize: 1000000 },
   fileFilter: (req, file, cb) => {
@@ -23,26 +21,4 @@ const upload =/* util.promisify( */ multer({
   }
 }).single("img_usuario");
 
-module.exports = async function(req, res, next) {
-/*   try{ */
-
- 
-upload(req, res, err=>{
-    if(err instanceof multer.MulterError){
-      return res.json(err instanceof multer.MulterError)
-    }
-    if(err){
-      return res.json(err)
-    }
-  } );
-
-    next();
-
-}/* catch(err){
-    console.log(err);
-    return res.json({error:true, message:err});  
-} */
-
-
-
-
+module.exports = upload;
