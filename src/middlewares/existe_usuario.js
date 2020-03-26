@@ -1,5 +1,5 @@
 const pool = require("../database");
-const comprobar_img = require("../libs/comprobar_img");
+const comprobar_img = require("../libs/eliminar_img");
 
 module.exports = async function(obj, img) {
   try {
