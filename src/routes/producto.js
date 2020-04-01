@@ -1,22 +1,15 @@
 const { Router }=require('express');
-const path=require('path');
-const multer=require('multer');
+const upload=require('../middlewares/upload_producto');
+const productoController=require('../controllers/producto');
+const estaLogeado=require('../middlewares/estaLogeado')
 
 const router=Router();
-const upload=multer({
-    // storage:storage,
-    dest:path.join(__dirname, '../public/upload/producto'),
-/*     fileFilter:(req,file,cb)=>{
-      const fileTypes=/jpg|jpeg|png/;
-      const mimetype=fileTypes.test(file.mimetype);
-      const extname=fileTypes.test(path.extname(file.originalname));
-      if(mimetype && mimetype){
-          return cb(null, true);
-      }
-      cb('error: el archivo debe ser una imagen');
-  } */
-  })
 
-router.get('/', upload.single('img_producto'));
+router.get('/', productoController.getAll);
+router.post('/', estaLogeado, upload, productoController.add);
+router.get('/lista', estaLogeado, productoController.getAllUser);
+router.put('/:id', estaLogeado, upload, productoController.edit);
+router.delete('/:id', estaLogeado, productoController.delete);
+router.get('/:id', productoController.getOne);
 
 module.exports=router;

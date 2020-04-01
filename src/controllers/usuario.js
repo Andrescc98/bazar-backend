@@ -23,10 +23,9 @@ class UsuarioController {
       if (!contrasenaValida) {
         return res.status(404).json("contraseña invalida");
       }
-      console.log(req.session.userid);
-      req.session.userid=usuario[0].id_usuario;
-      console.log(req.session.userid);
-      res.json("ok");
+      
+      const token=jwt.sign({_id:usuario[0].id_usuario}, req.locals.keyjwt);
+      res.json({token});
     } catch (err) {
 
       console.log(err);
