@@ -61,16 +61,24 @@ class UsuarioController {
       await pool.query("INSERT INTO usuario SET ?", [newUser]);
       res.json("usuario guardado");
     } catch (err) {
-      res.status(500).json(err);
+      console.log(err)
+      res.status(500).json('error interno');
     }
   }
 
   async getOne(req, res) {
     try {
-      const { id } = req.params;
+      var id;
+      if(req.params.id<0){
+        id=req.headers['authorization'].split(' ')[1];
+        id=jwt.verify(id, req.locals.keyjwt)._id;      
+      }else{
+         id  = req.params.id;
+      }
+       
 
       const usuario = await pool.query(
-        "SELECT * FROM usuario WHERE id_usuario=?",
+        "SELECT nombre_usuario, correo, telefono, img_usuario FROM usuario WHERE id_usuario=?",
         [id]
       );
       if (!usuario[0]) {
@@ -79,6 +87,7 @@ class UsuarioController {
       res.json(usuario);
     } catch (err) {
       console.log(err);
+      res.status(500).json('error interno');
     }
   }
 

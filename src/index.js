@@ -34,6 +34,7 @@ app.use((req, res, next) => {
 app.use("/api/usuario", require("./routes/usuario"));
 app.use("/api/producto", require("./routes/producto"));
 app.use("/api/comentario", require("./routes/comentario"));
+app.use("/api/categoria", require('./routes/categoria'));
 
 // public
 app.use('/public/img', express.static(path.join(__dirname, '/public/upload')))

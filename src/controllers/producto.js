@@ -16,7 +16,7 @@ class ProductoControler{
     }
     async add(req, res){
         try{
-            const token=req.headers['access-token'].split(' ')[1];
+            const token=req.headers['authorization'].split(' ')[1];
             const { titulo, descripcion, precio, stock, id_categoria }=req.body;
             const img=req.file? req.file.filename:'';
             const id_usuario=jwt.verify(token, req.locals.keyjwt)._id;
@@ -54,7 +54,7 @@ class ProductoControler{
     async edit(req, res){
         try{
             const {id}=req.params;
-            const token=req.headers['access-token'].split(' ')[1];
+            const token=req.headers['authorization'].split(' ')[1];
             const { titulo, descripcion, precio, stock, id_categoria }=req.body;
             const img=req.file? req.file.filename:'';
             const id_usuario=jwt.verify(token, req.locals.keyjwt)._id;
@@ -97,7 +97,7 @@ class ProductoControler{
     }
     async delete(req, res){
         try{
-            const token=req.headers['access-token'].split(' ')[1];
+            const token=req.headers['authorization'].split(' ')[1];
             const id_usuario=jwt.verify(token, req.locals.keyjwt)._id;            
             const {id}=req.params;
             const producto=await pool.query('SELECT * FROM productos WHERE id_producto=?', [id]);
@@ -118,7 +118,7 @@ class ProductoControler{
     }
     async getAllUser(req,res){
         try{
-            const token=req.headers['access-token'].split(' ')[1];
+            const token=req.headers['authorization'].split(' ')[1];
             const id_usuario=jwt.verify(token, req.locals.keyjwt)._id;
             console.log(id_usuario);
             const productos=await pool.query('SELECT * FROM productos WHERE id_usuario=?', [id_usuario]);
